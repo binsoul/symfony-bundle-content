@@ -1,0 +1,13 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    BinSoul\Symfony\Bundle\Content\Repository\:
+        resource: '../../Repository/*'
+        public: true
+
+    BinSoul\Symfony\Bundle\Content\EventListener\:
+        resource: '../../EventListener/*'
+        tags: [kernel.event_subscriber]
