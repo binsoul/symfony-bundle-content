@@ -6,6 +6,6 @@ namespace BinSoul\Symfony\Bundle\Content;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class ContentBundle extends Bundle
+class BinsoulContentBundle extends Bundle
 {
 }
