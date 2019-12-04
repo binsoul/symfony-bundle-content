@@ -30,7 +30,7 @@ class PageTranslationEntity
     private $id;
 
     /**
-     * @var PageEntity Route of the translation
+     * @var PageEntity Page of the translation
      * @ORM\ManyToOne(targetEntity="\BinSoul\Symfony\Bundle\Content\Entity\PageEntity", inversedBy="translations")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
@@ -68,13 +68,13 @@ class PageTranslationEntity
     private $metaDescription = '';
 
     /**
-     * @var \DateTime Update date of the product
+     * @var \DateTime Update date of the translation
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $updatedAt;
 
     /**
-     * @var \DateTime Creation date of the product
+     * @var \DateTime Creation date of the translation
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $createdAt;
