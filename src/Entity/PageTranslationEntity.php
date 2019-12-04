@@ -59,13 +59,13 @@ class PageTranslationEntity
      * @var string|null Meta keywords of the page
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $metaKeywords = '';
+    private $metaKeywords;
 
     /**
      * @var string|null Meta description of the page
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $metaDescription = '';
+    private $metaDescription;
 
     /**
      * @var \DateTime Update date of the translation
