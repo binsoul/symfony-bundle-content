@@ -19,6 +19,7 @@
     ],
     "require": {
         "php": "^7.2",
+        "ext-json": "*",
         "binsoul/common-i18n": "*@dev",
         "binsoul/common-i18n-intl": "*@dev",
         "binsoul/symfony-bundle-doctrine": "*@dev",

@@ -99,7 +99,7 @@ class PageTranslationEntity
 
     public function setPage(PageEntity $page): void
     {
-        if ($this->page) {
+        if ($this->page !== null) {
             $this->page->removeTranslation($this);
         }
 
