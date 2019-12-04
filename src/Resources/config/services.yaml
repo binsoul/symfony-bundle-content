@@ -10,4 +10,7 @@ services:
 
     BinSoul\Symfony\Bundle\Content\EventListener\:
         resource: '../../EventListener/*'
-        tags: [kernel.event_subscriber]
+        tags: ['kernel.event_subscriber']
+
+    BinSoul\Symfony\Bundle\Content\EventListener\TablePrefixListener:
+        tags: ['doctrine.event_subscriber']
