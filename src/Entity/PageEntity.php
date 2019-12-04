@@ -124,11 +124,31 @@ class PageEntity
     }
 
     /**
-     * @return PageTranslationEntity[]|ArrayCollection
+     * @return PageTranslationEntity[]
      */
-    public function getTranslations(): ArrayCollection
+    public function getTranslations(): array
     {
-        return $this->translations;
+        return $this->translations->toArray();
+    }
+
+    /*
+     * Adds a translation for this page.
+     */
+    public function addTranslation(PageTranslationEntity $translation): void
+    {
+        if (!$this->translations->contains($translation)) {
+            $this->translations->add($translation);
+        }
+    }
+
+    /*
+     * Removes a translation for this page.
+     */
+    public function removeTranslation(PageTranslationEntity $translation): void
+    {
+        if ($this->translations->contains($translation)) {
+            $this->translations->removeElement($translation);
+        }
     }
 
     /**

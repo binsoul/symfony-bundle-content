@@ -14,3 +14,6 @@ services:
 
     BinSoul\Symfony\Bundle\Content\EventListener\TablePrefixListener:
         tags: ['doctrine.event_subscriber']
+
+    BinSoul\Symfony\Bundle\Content\EventListener\SynchronizePageTranslationListener:
+        tags: ['doctrine.event_subscriber']
