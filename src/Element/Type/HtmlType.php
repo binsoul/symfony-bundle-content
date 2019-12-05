@@ -7,15 +7,12 @@ namespace BinSoul\Symfony\Bundle\Content\Element\Type;
 use BinSoul\Symfony\Bundle\Content\Element\Context;
 use BinSoul\Symfony\Bundle\Content\Element\Element;
 use BinSoul\Symfony\Bundle\Content\Element\Renderer;
-use BinSoul\Symfony\Bundle\Content\Element\Renderer\RawDataRenderer;
+use BinSoul\Symfony\Bundle\Content\Element\Traits\BuilderTrait;
 use BinSoul\Symfony\Bundle\Content\Element\Type;
 
 class HtmlType implements Type, Renderer
 {
-    /**
-     * @var RawDataRenderer
-     */
-    private $renderer;
+    use BuilderTrait;
 
     public function getCode(): string
     {
@@ -34,7 +31,7 @@ class HtmlType implements Type, Renderer
 
     public function render(Element $element, Context $context): string
     {
-        $result = '<div class="ce-'.$element->getType()->getCode().'">';
+        $result = '<div class="'.$this->buildClassName($element->getType()).'">';
         $result .= $element->getRawData();
         $result .= '</div>';
 

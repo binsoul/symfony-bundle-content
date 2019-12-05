@@ -7,9 +7,14 @@ namespace BinSoul\Symfony\Bundle\Content\Element\Renderer;
 use BinSoul\Symfony\Bundle\Content\Element\Context;
 use BinSoul\Symfony\Bundle\Content\Element\Element;
 use BinSoul\Symfony\Bundle\Content\Element\Renderer;
+use BinSoul\Symfony\Bundle\Content\Element\Traits\BuilderTrait;
+use BinSoul\Symfony\Bundle\Content\Element\Traits\EscaperTrait;
 
 class TagRenderer implements Renderer
 {
+    use EscaperTrait;
+    use BuilderTrait;
+
     /**
      * @var string[]
      */
@@ -33,8 +38,8 @@ class TagRenderer implements Renderer
     {
         $data = array_merge(['tag' => $this->tags[0], 'content' => ''], $element->getStructuredData());
 
-        $result = '<'.$data['tag'].' class="ce-'.$element->getType()->getCode().'">';
-        $result .= htmlspecialchars($data['content'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $result = '<'.$data['tag'].' class="'.$this->buildClassName($element->getType()).'">';
+        $result .= $this->escapeHtml($data['content']);
         $result .= '</'.$data['tag'].'>';
 
         return $result;
