@@ -17,7 +17,7 @@ class SynchronizeElementRelationListener implements EventSubscriber
         return [Events::preRemove];
     }
 
-    public function preRemove(LifecycleEventArgs $args)
+    public function preRemove(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();
         if ($entity instanceof ElementRelationEntity) {

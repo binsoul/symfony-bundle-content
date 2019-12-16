@@ -24,7 +24,7 @@ class Context
     /**
      * Clears all parameters.
      */
-    public function clear()
+    public function clear(): void
     {
         $this->parameters = [];
     }
@@ -46,7 +46,7 @@ class Context
      *
      * @return mixed[]
      */
-    public function all()
+    public function all(): array
     {
         return $this->parameters;
     }
@@ -60,7 +60,7 @@ class Context
      */
     public function get(string $name, $default = null)
     {
-        if (!\array_key_exists($name, $this->parameters)) {
+        if (!array_key_exists($name, $this->parameters)) {
             return $default;
         }
 
@@ -73,7 +73,7 @@ class Context
      * @param string $name  The parameter name
      * @param mixed  $value The parameter value
      */
-    public function set(string $name, $value)
+    public function set(string $name, $value): void
     {
         $this->parameters[$name] = $value;
     }
@@ -83,15 +83,15 @@ class Context
      *
      * @return bool
      */
-    public function has(string $name)
+    public function has(string $name): bool
     {
-        return \array_key_exists($name, $this->parameters);
+        return array_key_exists($name, $this->parameters);
     }
 
     /**
      * Removes a parameter.
      */
-    public function remove(string $name)
+    public function remove(string $name): void
     {
         unset($this->parameters[$name]);
     }
