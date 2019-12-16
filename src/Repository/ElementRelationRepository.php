@@ -7,7 +7,7 @@ namespace BinSoul\Symfony\Bundle\Content\Repository;
 use BinSoul\Symfony\Bundle\Content\Entity\ElementEntity;
 use BinSoul\Symfony\Bundle\Content\Entity\ElementRelationEntity;
 use BinSoul\Symfony\Bundle\Doctrine\Repository\AbstractRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 class ElementRelationRepository extends AbstractRepository
 {

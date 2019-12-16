@@ -9,7 +9,7 @@ use BinSoul\Symfony\Bundle\Content\Entity\PageElementEntity;
 use BinSoul\Symfony\Bundle\Content\Entity\PageEntity;
 use BinSoul\Symfony\Bundle\Doctrine\Repository\AbstractRepository;
 use BinSoul\Symfony\Bundle\I18n\Entity\LocaleEntity;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 class PageElementRepository extends AbstractRepository
 {
