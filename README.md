@@ -3,6 +3,7 @@
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
 [![Total Downloads][ico-downloads]][link-downloads]
+[![Build Status](https://travis-ci.org/binsoul/symfony-bundle-content.svg?branch=master)](https://travis-ci.org/binsoul/symfony-bundle-content)
 
 ## Install
 
