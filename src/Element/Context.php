@@ -80,8 +80,6 @@ class Context
 
     /**
      * Determines if the parameter exists.
-     *
-     * @return bool
      */
     public function has(string $name): bool
     {
