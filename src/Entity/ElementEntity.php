@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BinSoul\Symfony\Bundle\Content\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -79,19 +80,19 @@ class ElementEntity
     private $createdAt;
 
     /**
-     * @var ElementTranslationEntity[]|ArrayCollection
+     * @var ElementTranslationEntity[]|Collection<int, ElementTranslationEntity>
      * @ORM\OneToMany(targetEntity="\BinSoul\Symfony\Bundle\Content\Entity\ElementTranslationEntity", mappedBy="element")
      */
     private $translations;
 
     /**
-     * @var ElementRelationEntity[]|ArrayCollection
+     * @var ElementRelationEntity[]|Collection<int, ElementRelationEntity>
      * @ORM\OneToMany(targetEntity="\BinSoul\Symfony\Bundle\Content\Entity\ElementRelationEntity", mappedBy="parent")
      */
     private $children;
 
     /**
-     * @var ElementRelationEntity[]|ArrayCollection
+     * @var ElementRelationEntity[]|Collection<int, ElementRelationEntity>
      * @ORM\OneToMany(targetEntity="\BinSoul\Symfony\Bundle\Content\Entity\ElementRelationEntity", mappedBy="child")
      */
     private $parents;
@@ -205,7 +206,7 @@ class ElementEntity
      */
     public function addTranslation(ElementTranslationEntity $translation): void
     {
-        if (!$this->translations->contains($translation)) {
+        if (! $this->translations->contains($translation)) {
             $this->translations->add($translation);
         }
     }
@@ -262,7 +263,7 @@ class ElementEntity
                 }
             }
 
-            if (!$this->children->contains($relation)) {
+            if (! $this->children->contains($relation)) {
                 $this->children->add($relation);
                 $relation->getChild()->addRelation($relation);
             }
@@ -273,7 +274,7 @@ class ElementEntity
                 }
             }
 
-            if (!$this->parents->contains($relation)) {
+            if (! $this->parents->contains($relation)) {
                 $this->parents->add($relation);
                 $relation->getParent()->addRelation($relation);
             }

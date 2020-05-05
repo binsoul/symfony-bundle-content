@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BinSoul\Symfony\Bundle\Content\EventListener;
 
 use BinSoul\Symfony\Bundle\Content\Entity\ElementRelationEntity;
@@ -12,6 +14,9 @@ use Doctrine\ORM\Events;
  */
 class SynchronizeElementRelationListener implements EventSubscriber
 {
+    /**
+     * @return string[]
+     */
     public function getSubscribedEvents(): array
     {
         return [Events::preRemove];
@@ -20,6 +25,7 @@ class SynchronizeElementRelationListener implements EventSubscriber
     public function preRemove(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();
+
         if ($entity instanceof ElementRelationEntity) {
             $entity->getParent()->removeRelation($entity);
             $entity->getChild()->removeRelation($entity);

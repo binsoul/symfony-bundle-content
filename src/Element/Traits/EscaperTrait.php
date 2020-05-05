@@ -6,6 +6,9 @@ namespace BinSoul\Symfony\Bundle\Content\Element\Traits;
 
 trait EscaperTrait
 {
+    /**
+     * @var string[]
+     */
     private static $shortJavascriptSequences = [
         '\\' => '\\\\',
         '/' => '\\/',
@@ -18,12 +21,12 @@ trait EscaperTrait
 
     private function isUtf8(string $string): bool
     {
-        return !preg_match('//u', $string) ? false : true;
+        return ! preg_match('//u', $string) ? false : true;
     }
 
     private function assertIsUtf8(string $string): void
     {
-        if (!$this->isUtf8($string)) {
+        if (! $this->isUtf8($string)) {
             throw new \InvalidArgumentException('The string to escape is not a valid UTF-8 string.');
         }
     }
@@ -54,6 +57,7 @@ trait EscaperTrait
             }
 
             $utf16Char = iconv($char, 'UTF-16BE', 'UTF-8');
+
             if ($utf16Char === false) {
                 throw new \RuntimeException(sprintf('Cannot convert "%s" to UTF-16.', $char));
             }
@@ -61,10 +65,10 @@ trait EscaperTrait
             $hex = strtoupper(bin2hex($utf16Char));
 
             if (\strlen($hex) <= 4) {
-                return '\u'.$hex;
+                return '\u' . $hex;
             }
 
-            return '\u'.substr($hex, 0, -4).'\u'.substr($hex, -4);
+            return '\u' . substr($hex, 0, -4) . '\u' . substr($hex, -4);
         };
 
         return preg_replace_callback('/[^a-zA-Z0-9,._]/Su', $callback, $string) ?? $string;

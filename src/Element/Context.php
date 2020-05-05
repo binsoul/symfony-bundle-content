@@ -9,6 +9,9 @@ namespace BinSoul\Symfony\Bundle\Content\Element;
  */
 class Context
 {
+    /**
+     * @var mixed[]
+     */
     private $parameters = [];
 
     /**
@@ -54,13 +57,13 @@ class Context
     /**
      * Returns a parameter or the default value if the parameter doesn't exist.
      *
-     * @param mixed $default
+     * @param mixed|null $default
      *
-     * @return mixed
+     * @return mixed|null
      */
     public function get(string $name, $default = null)
     {
-        if (!array_key_exists($name, $this->parameters)) {
+        if (! array_key_exists($name, $this->parameters)) {
             return $default;
         }
 

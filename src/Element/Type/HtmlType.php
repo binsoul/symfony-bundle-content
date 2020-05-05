@@ -31,7 +31,7 @@ class HtmlType implements Type, Renderer
 
     public function render(Element $element, Context $context): string
     {
-        $result = '<div class="'.$this->buildClassName($element->getType()).'">';
+        $result = '<div class="' . $this->buildClassName($element->getType()) . '">';
         $result .= $element->getRawData();
         $result .= '</div>';
 

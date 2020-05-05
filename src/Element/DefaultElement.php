@@ -16,10 +16,12 @@ class DefaultElement implements Element
      * @var ElementEntity
      */
     private $elementEntity;
+
     /**
      * @var ElementTranslationEntity
      */
     private $elementTranslationEntity;
+
     /**
      * @var Type
      */

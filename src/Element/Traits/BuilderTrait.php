@@ -13,6 +13,6 @@ trait BuilderTrait
         $code = strtolower($type->getCode());
         $asciiCode = preg_replace('/[^a-z0-9\-]/Su', '-', $code) ?? $code;
 
-        return 'ce-'.trim(preg_replace('/[-]+/', '-', $asciiCode) ?? $asciiCode, '-');
+        return 'ce-' . trim(preg_replace('/[-]+/', '-', $asciiCode) ?? $asciiCode, '-');
     }
 }

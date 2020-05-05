@@ -25,7 +25,7 @@ class TwigGlobalsListener implements EventSubscriberInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return mixed[][]
      */
     public static function getSubscribedEvents(): array
     {
@@ -40,7 +40,7 @@ class TwigGlobalsListener implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
-        if (!$this->container->has('twig')) {
+        if (! $this->container->has('twig')) {
             return;
         }
 

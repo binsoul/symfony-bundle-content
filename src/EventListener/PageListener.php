@@ -19,6 +19,7 @@ class PageListener implements EventSubscriberInterface
      * @var PageRepository
      */
     private $pageRepository;
+
     /**
      * @var PageTranslationRepository
      */
@@ -34,7 +35,7 @@ class PageListener implements EventSubscriberInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return mixed[][]
      */
     public static function getSubscribedEvents(): array
     {
@@ -50,7 +51,8 @@ class PageListener implements EventSubscriberInterface
         $request = $event->getRequest();
         /** @var DomainEntity|null $domain */
         $domain = $request->attributes->get('domain');
-        if (!$domain) {
+
+        if (! $domain) {
             return;
         }
 
@@ -65,8 +67,10 @@ class PageListener implements EventSubscriberInterface
         $pageDescription = null;
         /** @var RouteEntity|null $route */
         $route = $request->attributes->get('route');
+
         if ($route) {
             $page = $this->pageRepository->findByRoute($route);
+
             if ($page) {
                 foreach ([$locale, $domain->getDefaultLocale(), $domain->getWebsite()->getDefaultLocale()] as $translationLocale) {
                     if ($translationLocale === null) {
@@ -74,6 +78,7 @@ class PageListener implements EventSubscriberInterface
                     }
 
                     $pageDescription = $this->pageTranslationRepository->findByPageAndLocale($page, $translationLocale);
+
                     if ($pageDescription) {
                         break;
                     }

@@ -77,6 +77,7 @@ class ElementRelationEntity
         }
 
         $this->parent = $parent;
+
         if ($this->child !== null) {
             $parent->addRelation($this);
             $this->child->addRelation($this);
@@ -99,6 +100,7 @@ class ElementRelationEntity
         }
 
         $this->child = $child;
+
         if ($this->parent !== null) {
             $child->addRelation($this);
             $this->parent->addRelation($this);

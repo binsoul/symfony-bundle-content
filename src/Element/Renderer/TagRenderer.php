@@ -38,9 +38,9 @@ class TagRenderer implements Renderer
     {
         $data = array_merge(['tag' => $this->tags[0], 'content' => ''], $element->getStructuredData());
 
-        $result = '<'.$data['tag'].' class="'.$this->buildClassName($element->getType()).'">';
+        $result = '<' . $data['tag'] . ' class="' . $this->buildClassName($element->getType()) . '">';
         $result .= $this->escapeHtml($data['content']);
-        $result .= '</'.$data['tag'].'>';
+        $result .= '</' . $data['tag'] . '>';
 
         return $result;
     }

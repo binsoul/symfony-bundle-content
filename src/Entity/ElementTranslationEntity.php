@@ -120,7 +120,7 @@ class ElementTranslationEntity
             return [];
         }
 
-        if (!\is_string($this->data)) {
+        if (! \is_string($this->data)) {
             return (array) $this->data;
         }
 

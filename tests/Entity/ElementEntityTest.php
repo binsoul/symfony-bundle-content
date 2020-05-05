@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BinSoul\Test\Symfony\Bundle\Content\Entity;
 
 use BinSoul\Symfony\Bundle\Content\Entity\ElementEntity;
@@ -73,7 +75,7 @@ class ElementEntityTest extends TestCase
         $relation2->method('getParent')->willReturn($parent1);
         $relation2->method('getChild')->willReturn($child2);
 
-        /* @var ElementRelationEntity $relation2 */
+        /** @var ElementRelationEntity $relation2 */
         $parent1->addRelation($relation2);
 
         $this->assertCount(2, $parent1->getChildren());
@@ -98,10 +100,10 @@ class ElementEntityTest extends TestCase
         $relation2->method('getParent')->willReturn($child);
         $relation2->method('getChild')->willReturn($parent);
 
-        /* @var ElementRelationEntity $relation1 */
+        /** @var ElementRelationEntity $relation1 */
         $parent->addRelation($relation1);
 
-        /* @var ElementRelationEntity $relation2 */
+        /** @var ElementRelationEntity $relation2 */
         $parent->addRelation($relation2);
     }
 
@@ -122,10 +124,10 @@ class ElementEntityTest extends TestCase
         $relation2->method('getParent')->willReturn($parent);
         $relation2->method('getChild')->willReturn($child);
 
-        /* @var ElementRelationEntity $relation1 */
+        /** @var ElementRelationEntity $relation1 */
         $parent->addRelation($relation1);
 
-        /* @var ElementRelationEntity $relation2 */
+        /** @var ElementRelationEntity $relation2 */
         $parent->addRelation($relation2);
     }
 }

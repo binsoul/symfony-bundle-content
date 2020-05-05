@@ -7,6 +7,7 @@ namespace BinSoul\Symfony\Bundle\Content\Entity;
 use BinSoul\Symfony\Bundle\Routing\Entity\RouteEntity;
 use BinSoul\Symfony\Bundle\Website\Entity\WebsiteEntity;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -64,7 +65,7 @@ class PageEntity
     private $createdAt;
 
     /**
-     * @var PageTranslationEntity[]|ArrayCollection
+     * @var PageTranslationEntity[]|Collection<int, PageTranslationEntity>
      * @ORM\OneToMany(targetEntity="\BinSoul\Symfony\Bundle\Content\Entity\PageTranslationEntity", mappedBy="page")
      */
     private $translations;
@@ -136,7 +137,7 @@ class PageEntity
      */
     public function addTranslation(PageTranslationEntity $translation): void
     {
-        if (!$this->translations->contains($translation)) {
+        if (! $this->translations->contains($translation)) {
             $this->translations->add($translation);
         }
     }

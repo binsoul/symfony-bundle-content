@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BinSoul\Test\Symfony\Bundle\Content\Entity;
 
 use BinSoul\Symfony\Bundle\Content\Entity\ElementEntity;

@@ -12,9 +12,12 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class BinsoulContentExtension extends Extension
 {
+    /**
+     * @param mixed[] $configs
+     */
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
 
         $configuration = new Configuration();
@@ -23,6 +26,7 @@ class BinsoulContentExtension extends Extension
 
         $definition = $container->getDefinition(TablePrefixListener::class);
         $definition->setArgument(0, $prefix);
+
         if ($prefix === '') {
             $definition->clearTags();
         }

@@ -23,10 +23,12 @@ class DefaultRenderer implements Renderer
      * @var PageElementRepository
      */
     private $pageElementRepository;
+
     /**
      * @var ElementTranslationRepository
      */
     private $elementTranslationRepository;
+
     /**
      * @var TypeFactory
      */
@@ -57,6 +59,7 @@ class DefaultRenderer implements Renderer
 
         /** @var ElementEntity[] $elements */
         $elements = [];
+
         foreach ($pageElements as $pageElement) {
             $elements[] = $pageElement->getElement();
         }
@@ -67,12 +70,14 @@ class DefaultRenderer implements Renderer
         $elementTranslations = $this->elementTranslationRepository->findAllByElementsAndLocale($elements, $locale);
 
         $result = '';
+
         foreach ($elements as $element) {
-            if (!$element->isVisible()) {
+            if (! $element->isVisible()) {
                 continue;
             }
 
             $translation = null;
+
             foreach ($elementTranslations as $elementTranslation) {
                 if ($elementTranslation->getElement()->getId() === $element->getId()) {
                     $translation = $elementTranslation;
