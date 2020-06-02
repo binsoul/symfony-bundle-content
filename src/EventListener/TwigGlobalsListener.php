@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace BinSoul\Symfony\Bundle\Content\EventListener;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Twig\Environment;
 
 class TwigGlobalsListener implements EventSubscriberInterface
 {
     /**
-     * @var ContainerInterface
+     * @var Environment
      */
-    private $container;
+    private $twig;
 
     /**
      * Constructs an instance of this class.
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Environment $twig)
     {
-        $this->container = $container;
+        $this->twig = $twig;
     }
 
     /**
@@ -40,18 +40,11 @@ class TwigGlobalsListener implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
-        if (! $this->container->has('twig')) {
-            return;
-        }
-
-        /** @var \Twig\Environment $twig */
-        $twig = $this->container->get('twig');
-
-        $twig->addGlobal('domain', $request->attributes->get('domain'));
-        $twig->addGlobal('website', $request->attributes->get('website'));
-        $twig->addGlobal('locale', $request->attributes->get('locale'));
-        $twig->addGlobal('language', $request->attributes->get('language'));
-        $twig->addGlobal('page', $request->attributes->get('page'));
-        $twig->addGlobal('pageDescription', $request->attributes->get('pageDescription'));
+        $this->twig->addGlobal('domain', $request->attributes->get('domain'));
+        $this->twig->addGlobal('website', $request->attributes->get('website'));
+        $this->twig->addGlobal('locale', $request->attributes->get('locale'));
+        $this->twig->addGlobal('language', $request->attributes->get('language'));
+        $this->twig->addGlobal('page', $request->attributes->get('page'));
+        $this->twig->addGlobal('pageDescription', $request->attributes->get('pageDescription'));
     }
 }
