@@ -7,6 +7,7 @@ namespace BinSoul\Test\Symfony\Bundle\Content\Entity;
 use BinSoul\Symfony\Bundle\Content\Entity\ElementEntity;
 use BinSoul\Symfony\Bundle\Content\Entity\ElementRelationEntity;
 use BinSoul\Symfony\Bundle\Content\Entity\ElementTranslationEntity;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class ElementEntityTest extends TestCase
@@ -18,24 +19,24 @@ class ElementEntityTest extends TestCase
         $translation1 = new ElementTranslationEntity();
         $translation1->setElement($element1);
 
-        $this->assertCount(1, $element1->getTranslations());
+        self::assertCount(1, $element1->getTranslations());
 
         $translation2 = new ElementTranslationEntity();
         $translation2->setElement($element1);
 
-        $this->assertCount(2, $element1->getTranslations());
+        self::assertCount(2, $element1->getTranslations());
 
         $element1->removeTranslation($translation1);
-        $this->assertCount(1, $element1->getTranslations());
+        self::assertCount(1, $element1->getTranslations());
 
         $element1->addTranslation($translation1);
-        $this->assertCount(2, $element1->getTranslations());
+        self::assertCount(2, $element1->getTranslations());
 
         $element2 = new ElementEntity();
         $translation1->setElement($element2);
 
-        $this->assertCount(1, $element1->getTranslations());
-        $this->assertCount(1, $element2->getTranslations());
+        self::assertCount(1, $element1->getTranslations());
+        self::assertCount(1, $element2->getTranslations());
     }
 
     public function test_removes_relations(): void
@@ -53,12 +54,12 @@ class ElementEntityTest extends TestCase
         $relation2->setChild($child2);
 
         $parent->removeRelation($relation1);
-        $this->assertCount(1, $parent->getChildren());
-        $this->assertCount(0, $child1->getParents());
+        self::assertCount(1, $parent->getChildren());
+        self::assertCount(0, $child1->getParents());
 
         $parent->removeRelation($relation2);
-        $this->assertCount(0, $parent->getChildren());
-        $this->assertCount(0, $child2->getParents());
+        self::assertCount(0, $parent->getChildren());
+        self::assertCount(0, $child2->getParents());
     }
 
     public function test_adds_relations(): void
@@ -78,14 +79,14 @@ class ElementEntityTest extends TestCase
         /** @var ElementRelationEntity $relation2 */
         $parent1->addRelation($relation2);
 
-        $this->assertCount(2, $parent1->getChildren());
-        $this->assertCount(1, $child2->getParents());
-        $this->assertEquals($parent1, $child2->getParents()[0]->getParent());
+        self::assertCount(2, $parent1->getChildren());
+        self::assertCount(1, $child2->getParents());
+        self::assertEquals($parent1, $child2->getParents()[0]->getParent());
     }
 
     public function test_detects_existing_child_relation(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $parent = new ElementEntity(1);
         $child = new ElementEntity(2);
@@ -109,7 +110,7 @@ class ElementEntityTest extends TestCase
 
     public function test_detects_existing_parent_relation(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $parent = new ElementEntity(1);
         $child = new ElementEntity(2);

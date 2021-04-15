@@ -17,23 +17,23 @@ class PageEntityTest extends TestCase
         $translation1 = new PageTranslationEntity();
         $translation1->setPage($page1);
 
-        $this->assertCount(1, $page1->getTranslations());
+        self::assertCount(1, $page1->getTranslations());
 
         $translation2 = new PageTranslationEntity();
         $translation2->setPage($page1);
 
-        $this->assertCount(2, $page1->getTranslations());
+        self::assertCount(2, $page1->getTranslations());
 
         $page1->removeTranslation($translation1);
-        $this->assertCount(1, $page1->getTranslations());
+        self::assertCount(1, $page1->getTranslations());
 
         $page1->addTranslation($translation1);
-        $this->assertCount(2, $page1->getTranslations());
+        self::assertCount(2, $page1->getTranslations());
 
         $page2 = new PageEntity();
         $translation1->setPage($page2);
 
-        $this->assertCount(1, $page1->getTranslations());
-        $this->assertCount(1, $page2->getTranslations());
+        self::assertCount(1, $page1->getTranslations());
+        self::assertCount(1, $page2->getTranslations());
     }
 }

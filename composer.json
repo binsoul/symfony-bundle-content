@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "php": "^7.3",
+        "php": "^7.3 || ^8.0",
         "ext-json": "*",
         "ext-iconv": "*",
         "binsoul/common-i18n": "*@dev",
@@ -36,7 +36,7 @@
     "require-dev": {
         "binsoul/coding-standard": "*@dev",
         "phpstan/phpstan": "^0.12",
-        "phpunit/phpunit": "^8|^9",
+        "phpunit/phpunit": "^9",
         "symplify/easy-coding-standard-prefixed": "^9"
     },
     "autoload": {
