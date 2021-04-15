@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace BinSoul\Symfony\Bundle\Content\Entity;
 
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 
 /**
  * Represents a content element.
@@ -44,13 +47,13 @@ class ElementEntity
     private $isVisible;
 
     /**
-     * @var \DateTime|null Start of the visibility of the element
+     * @var DateTime|null Start of the visibility of the element
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $visibleFrom;
 
     /**
-     * @var \DateTime|null End of the visibility of the element
+     * @var DateTime|null End of the visibility of the element
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $visibleTo;
@@ -68,13 +71,13 @@ class ElementEntity
     private $marginAfter;
 
     /**
-     * @var \DateTime Update date of the element
+     * @var DateTime Update date of the element
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $updatedAt;
 
     /**
-     * @var \DateTime Creation date of the element
+     * @var DateTime Creation date of the element
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $createdAt;
@@ -143,22 +146,22 @@ class ElementEntity
         $this->isVisible = $isVisible;
     }
 
-    public function getVisibleFrom(): ?\DateTimeInterface
+    public function getVisibleFrom(): ?DateTimeInterface
     {
         return $this->visibleFrom;
     }
 
-    public function setVisibleFrom(?\DateTime $visibleFrom): void
+    public function setVisibleFrom(?DateTime $visibleFrom): void
     {
         $this->visibleFrom = $visibleFrom;
     }
 
-    public function getVisibleTo(): ?\DateTimeInterface
+    public function getVisibleTo(): ?DateTimeInterface
     {
         return $this->visibleTo;
     }
 
-    public function setVisibleTo(?\DateTime $visibleTo): void
+    public function setVisibleTo(?DateTime $visibleTo): void
     {
         $this->visibleTo = $visibleTo;
     }
@@ -183,14 +186,14 @@ class ElementEntity
         $this->marginAfter = $marginAfter;
     }
 
-    public function getUpdatedAt(): \DateTimeInterface
+    public function getUpdatedAt(): DateTimeInterface
     {
-        return $this->updatedAt ?? new \DateTime();
+        return $this->updatedAt ?? new DateTime();
     }
 
-    public function getCreatedAt(): \DateTimeInterface
+    public function getCreatedAt(): DateTimeInterface
     {
-        return $this->createdAt ?? new \DateTime();
+        return $this->createdAt ?? new DateTime();
     }
 
     /**
@@ -259,7 +262,7 @@ class ElementEntity
         if ($relation->getParent()->getId() === $this->id) {
             foreach ($this->parents as $entity) {
                 if ($entity->getParent()->getId() === $relation->getChild()->getId()) {
-                    throw new \InvalidArgumentException('Relationship already exists as parent of this element.');
+                    throw new InvalidArgumentException('Relationship already exists as parent of this element.');
                 }
             }
 
@@ -270,7 +273,7 @@ class ElementEntity
         } elseif ($relation->getChild()->getId() === $this->getId()) {
             foreach ($this->children as $entity) {
                 if ($entity->getChild()->getId() === $relation->getParent()->getId()) {
-                    throw new \InvalidArgumentException('Relationship already exists as child of this element.');
+                    throw new InvalidArgumentException('Relationship already exists as child of this element.');
                 }
             }
 
@@ -303,10 +306,10 @@ class ElementEntity
      */
     public function updateTimestamps(): void
     {
-        $this->updatedAt = new \DateTime();
+        $this->updatedAt = new DateTime();
 
         if ($this->createdAt === null) {
-            $this->createdAt = new \DateTime();
+            $this->createdAt = new DateTime();
         }
     }
 }

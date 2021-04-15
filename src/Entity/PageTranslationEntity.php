@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace BinSoul\Symfony\Bundle\Content\Entity;
 
 use BinSoul\Symfony\Bundle\I18n\Entity\LocaleEntity;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(
  *     name="page_translation",
  *     uniqueConstraints={
- *        @ORM\UniqueConstraint(columns={"page_id", "locale_id"}),
+ *         @ORM\UniqueConstraint(columns={"page_id", "locale_id"}),
  *     }
  * )
  * @ORM\HasLifecycleCallbacks()
@@ -68,13 +70,13 @@ class PageTranslationEntity
     private $metaDescription;
 
     /**
-     * @var \DateTime Update date of the translation
+     * @var DateTime Update date of the translation
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $updatedAt;
 
     /**
-     * @var \DateTime Creation date of the translation
+     * @var DateTime Creation date of the translation
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $createdAt;
@@ -157,14 +159,14 @@ class PageTranslationEntity
         $this->metaDescription = $metaDescription;
     }
 
-    public function getUpdatedAt(): \DateTimeInterface
+    public function getUpdatedAt(): DateTimeInterface
     {
-        return $this->updatedAt ?? new \DateTime();
+        return $this->updatedAt ?? new DateTime();
     }
 
-    public function getCreatedAt(): \DateTimeInterface
+    public function getCreatedAt(): DateTimeInterface
     {
-        return $this->createdAt ?? new \DateTime();
+        return $this->createdAt ?? new DateTime();
     }
 
     /**
@@ -173,10 +175,10 @@ class PageTranslationEntity
      */
     public function updateTimestamps(): void
     {
-        $this->updatedAt = new \DateTime();
+        $this->updatedAt = new DateTime();
 
         if ($this->createdAt === null) {
-            $this->createdAt = new \DateTime();
+            $this->createdAt = new DateTime();
         }
     }
 }

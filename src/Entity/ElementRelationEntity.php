@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BinSoul\Symfony\Bundle\Content\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 
 /**
  * Represents a relationship between content elements.
@@ -13,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(
  *     name="element_relation",
  *     uniqueConstraints={
- *        @ORM\UniqueConstraint(columns={"parent_id", "child_id"}),
+ *         @ORM\UniqueConstraint(columns={"parent_id", "child_id"}),
  *     }
  * )
  * @ORM\HasLifecycleCallbacks()
@@ -69,7 +70,7 @@ class ElementRelationEntity
     public function setParent(ElementEntity $parent): void
     {
         if ($this->child !== null && $this->child->getId() === $parent->getId()) {
-            throw new \InvalidArgumentException(sprintf('Parent and child should not be equal.'));
+            throw new InvalidArgumentException(sprintf('Parent and child should not be equal.'));
         }
 
         if ($this->parent !== null) {
@@ -92,7 +93,7 @@ class ElementRelationEntity
     public function setChild(ElementEntity $child): void
     {
         if ($this->parent !== null && $this->parent->getId() === $child->getId()) {
-            throw new \InvalidArgumentException(sprintf('Parent and child should not be equal.'));
+            throw new InvalidArgumentException(sprintf('Parent and child should not be equal.'));
         }
 
         if ($this->child !== null) {

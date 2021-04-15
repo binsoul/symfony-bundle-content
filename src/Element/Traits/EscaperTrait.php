@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace BinSoul\Symfony\Bundle\Content\Element\Traits;
 
+use InvalidArgumentException;
+use RuntimeException;
+
 trait EscaperTrait
 {
     /**
@@ -27,7 +30,7 @@ trait EscaperTrait
     private function assertIsUtf8(string $string): void
     {
         if (! $this->isUtf8($string)) {
-            throw new \InvalidArgumentException('The string to escape is not a valid UTF-8 string.');
+            throw new InvalidArgumentException('The string to escape is not a valid UTF-8 string.');
         }
     }
 
@@ -59,7 +62,7 @@ trait EscaperTrait
             $utf16Char = iconv($char, 'UTF-16BE', 'UTF-8');
 
             if ($utf16Char === false) {
-                throw new \RuntimeException(sprintf('Cannot convert "%s" to UTF-16.', $char));
+                throw new RuntimeException(sprintf('Cannot convert "%s" to UTF-16.', $char));
             }
 
             $hex = strtoupper(bin2hex($utf16Char));

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace BinSoul\Symfony\Bundle\Content\Element;
 
+use InvalidArgumentException;
+
 /**
  * Provides a default implementation of the {@see TypeFactory} interface.
  */
@@ -37,6 +39,6 @@ class DefaultTypeFactory implements TypeFactory
             return $this->types[$code];
         }
 
-        throw new \InvalidArgumentException(sprintf('Unknown element type "%s".', $code));
+        throw new InvalidArgumentException(sprintf('Unknown element type "%s".', $code));
     }
 }

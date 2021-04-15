@@ -9,6 +9,7 @@ use BinSoul\Symfony\Bundle\Content\Element\Element;
 use BinSoul\Symfony\Bundle\Content\Element\Renderer;
 use BinSoul\Symfony\Bundle\Content\Element\Traits\BuilderTrait;
 use BinSoul\Symfony\Bundle\Content\Element\Traits\EscaperTrait;
+use InvalidArgumentException;
 
 class TagRenderer implements Renderer
 {
@@ -28,7 +29,7 @@ class TagRenderer implements Renderer
     public function __construct(array $tags)
     {
         if (count($tags) === 0) {
-            throw new \InvalidArgumentException('At least one tag is required.');
+            throw new InvalidArgumentException('At least one tag is required.');
         }
 
         $this->tags = array_values($tags);
@@ -36,7 +37,13 @@ class TagRenderer implements Renderer
 
     public function render(Element $element, Context $context): string
     {
-        $data = array_merge(['tag' => $this->tags[0], 'content' => ''], $element->getStructuredData());
+        $data = array_merge(
+            [
+                'tag' => $this->tags[0],
+                'content' => '',
+            ],
+            $element->getStructuredData()
+        );
 
         $result = '<' . $data['tag'] . ' class="' . $this->buildClassName($element->getType()) . '">';
         $result .= $this->escapeHtml($data['content']);

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace BinSoul\Symfony\Bundle\Content\Entity;
 
 use BinSoul\Symfony\Bundle\I18n\Entity\LocaleEntity;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(
  *     name="element_translation",
  *     uniqueConstraints={
- *        @ORM\UniqueConstraint(columns={"element_id", "locale_id"}),
+ *         @ORM\UniqueConstraint(columns={"element_id", "locale_id"}),
  *     }
  * )
  * @ORM\HasLifecycleCallbacks()
@@ -50,13 +52,13 @@ class ElementTranslationEntity
     private $data;
 
     /**
-     * @var \DateTime Update date of the product
+     * @var DateTime Update date of the product
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $updatedAt;
 
     /**
-     * @var \DateTime Creation date of the product
+     * @var DateTime Creation date of the product
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $createdAt;
@@ -137,14 +139,14 @@ class ElementTranslationEntity
         $this->data = @json_encode($data, JSON_PRETTY_PRINT) ?: '';
     }
 
-    public function getUpdatedAt(): \DateTimeInterface
+    public function getUpdatedAt(): DateTimeInterface
     {
-        return $this->updatedAt ?? new \DateTime();
+        return $this->updatedAt ?? new DateTime();
     }
 
-    public function getCreatedAt(): \DateTimeInterface
+    public function getCreatedAt(): DateTimeInterface
     {
-        return $this->createdAt ?? new \DateTime();
+        return $this->createdAt ?? new DateTime();
     }
 
     /**
@@ -153,10 +155,10 @@ class ElementTranslationEntity
      */
     public function updateTimestamps(): void
     {
-        $this->updatedAt = new \DateTime();
+        $this->updatedAt = new DateTime();
 
         if ($this->createdAt === null) {
-            $this->createdAt = new \DateTime();
+            $this->createdAt = new DateTime();
         }
     }
 }
