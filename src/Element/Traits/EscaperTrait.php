@@ -24,7 +24,7 @@ trait EscaperTrait
 
     private function isUtf8(string $string): bool
     {
-        return ! preg_match('//u', $string) ? false : true;
+        return (bool) preg_match('//u', $string);
     }
 
     private function assertIsUtf8(string $string): void
@@ -52,7 +52,7 @@ trait EscaperTrait
     {
         $this->assertIsUtf8($string);
 
-        $callback = static function ($matches) {
+        $callback = static function ($matches): string {
             $char = $matches[0];
 
             if (isset(self::$shortJavascriptSequences[$char])) {
@@ -67,13 +67,13 @@ trait EscaperTrait
 
             $hex = strtoupper(bin2hex($utf16Char));
 
-            if (\strlen($hex) <= 4) {
+            if (strlen($hex) <= 4) {
                 return '\u' . $hex;
             }
 
             return '\u' . substr($hex, 0, -4) . '\u' . substr($hex, -4);
         };
 
-        return preg_replace_callback('/[^a-zA-Z0-9,._]/Su', $callback, $string) ?? $string;
+        return preg_replace_callback('#[^a-zA-Z0-9,._]#Su', $callback, $string) ?? $string;
     }
 }

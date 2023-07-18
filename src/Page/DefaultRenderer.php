@@ -15,24 +15,15 @@ use BinSoul\Symfony\Bundle\Content\Repository\PageElementRepository;
 use BinSoul\Symfony\Bundle\I18n\Entity\LocaleEntity;
 
 /**
- * Provides a default implementation of the {@see \BinSoul\Symfony\Bundle\Content\Page\Renderer Renderer} interface.
+ * Provides a default implementation of the {@see Renderer Renderer} interface.
  */
 class DefaultRenderer implements Renderer
 {
-    /**
-     * @var PageElementRepository
-     */
-    private $pageElementRepository;
+    private PageElementRepository $pageElementRepository;
 
-    /**
-     * @var ElementTranslationRepository
-     */
-    private $elementTranslationRepository;
+    private ElementTranslationRepository $elementTranslationRepository;
 
-    /**
-     * @var TypeFactory
-     */
-    private $typeFactory;
+    private TypeFactory $typeFactory;
 
     /**
      * Constructs an instance of this class.
@@ -52,7 +43,7 @@ class DefaultRenderer implements Renderer
         $pageElements = $this->pageElementRepository->findAllByPageAndLocale($page, $locale);
         uasort(
             $pageElements,
-            static function (PageElementEntity $a, PageElementEntity $b) {
+            static function (PageElementEntity $a, PageElementEntity $b): int {
                 return $a->getSortOrder() <=> $b->getSortOrder();
             }
         );

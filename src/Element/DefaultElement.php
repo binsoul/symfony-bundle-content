@@ -12,20 +12,11 @@ use BinSoul\Symfony\Bundle\Content\Entity\ElementTranslationEntity;
  */
 class DefaultElement implements Element
 {
-    /**
-     * @var ElementEntity
-     */
-    private $elementEntity;
+    private ElementEntity $elementEntity;
 
-    /**
-     * @var ElementTranslationEntity
-     */
-    private $elementTranslationEntity;
+    private ElementTranslationEntity $elementTranslationEntity;
 
-    /**
-     * @var Type
-     */
-    private $type;
+    private Type $type;
 
     /**
      * Constructs an instance of ths class.

@@ -7,61 +7,51 @@ namespace BinSoul\Symfony\Bundle\Content\Entity;
 use BinSoul\Symfony\Bundle\I18n\Entity\LocaleEntity;
 use DateTime;
 use DateTimeInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Represents a translation of a content element.
- *
- * @ORM\Entity()
- * @ORM\Table(
- *     name="element_translation",
- *     uniqueConstraints={
- *         @ORM\UniqueConstraint(columns={"element_id", "locale_id"}),
- *     }
- * )
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'element_translation')]
+#[ORM\UniqueConstraint(columns: ['element_id', 'locale_id'])]
+#[ORM\HasLifecycleCallbacks]
 class ElementTranslationEntity
 {
     /**
      * @var int|null ID of the translation
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
      */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id;
 
     /**
      * @var ElementEntity Element of the translation
-     * @ORM\ManyToOne(targetEntity="\BinSoul\Symfony\Bundle\Content\Entity\ElementEntity", inversedBy="translations")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
-    private $element;
+    #[ORM\ManyToOne(targetEntity: ElementEntity::class, inversedBy: 'translations')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    private ElementEntity $element;
 
     /**
      * @var LocaleEntity Locale of the translation
-     * @ORM\ManyToOne(targetEntity="\BinSoul\Symfony\Bundle\I18n\Entity\LocaleEntity")
-     * @ORM\JoinColumn(nullable=false)
      */
-    private $locale;
+    #[ORM\ManyToOne(targetEntity: LocaleEntity::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private LocaleEntity $locale;
 
     /**
-     * @var string Serialized data of the translation
-     * @ORM\Column(type="text", nullable=false)
+     * @var string|array Serialized data of the translation
      */
-    private $data;
+    #[ORM\Column(type: Types::TEXT)]
+    private string|array $data;
 
-    /**
-     * @var DateTime Update date of the product
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    private $updatedAt;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?DateTime $updatedAt = null;
 
-    /**
-     * @var DateTime Creation date of the product
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    private $createdAt;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?DateTime $createdAt = null;
 
     /**
      * Constructs an instance of this class.
@@ -83,9 +73,7 @@ class ElementTranslationEntity
 
     public function setElement(ElementEntity $element): void
     {
-        if ($this->element !== null) {
-            $this->element->removeTranslation($this);
-        }
+        $this->element->removeTranslation($this);
 
         $element->addTranslation($this);
         $this->element = $element;
@@ -113,30 +101,22 @@ class ElementTranslationEntity
 
     /**
      * Deserializes the data property and return the resulting array.
-     *
-     * @return mixed[]
      */
     public function getStructuredData(): array
     {
-        if ($this->data === null) {
-            return [];
+        if (! is_string($this->data)) {
+            return $this->data;
         }
 
-        if (! \is_string($this->data)) {
-            return (array) $this->data;
-        }
-
-        return @json_decode($this->data, true);
+        return @json_decode($this->data, true, 512, JSON_THROW_ON_ERROR);
     }
 
     /**
      * Serializes the given array and updates the data property.
-     *
-     * @param mixed[] $data
      */
     public function setStructuredData(array $data): void
     {
-        $this->data = @json_encode($data, JSON_PRETTY_PRINT) ?: '';
+        $this->data = @json_encode($data, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT) ?: '';
     }
 
     public function getUpdatedAt(): DateTimeInterface
@@ -149,10 +129,8 @@ class ElementTranslationEntity
         return $this->createdAt ?? new DateTime();
     }
 
-    /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     */
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
     public function updateTimestamps(): void
     {
         $this->updatedAt = new DateTime();

@@ -15,15 +15,9 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class PageListener implements EventSubscriberInterface
 {
-    /**
-     * @var PageRepository
-     */
-    private $pageRepository;
+    private PageRepository $pageRepository;
 
-    /**
-     * @var PageTranslationRepository
-     */
-    private $pageTranslationRepository;
+    private PageTranslationRepository $pageTranslationRepository;
 
     /**
      * Constructs an instance of this class.
@@ -35,7 +29,7 @@ class PageListener implements EventSubscriberInterface
     }
 
     /**
-     * @return mixed[][]
+     * @return array[]
      */
     public static function getSubscribedEvents(): array
     {
@@ -52,7 +46,7 @@ class PageListener implements EventSubscriberInterface
         /** @var DomainEntity|null $domain */
         $domain = $request->attributes->get('domain');
 
-        if (! $domain) {
+        if ($domain === null) {
             return;
         }
 
@@ -68,10 +62,10 @@ class PageListener implements EventSubscriberInterface
         /** @var RouteEntity|null $route */
         $route = $request->attributes->get('route');
 
-        if ($route) {
+        if ($route !== null) {
             $page = $this->pageRepository->findByRoute($route);
 
-            if ($page) {
+            if ($page !== null) {
                 foreach ([$locale, $domain->getDefaultLocale(), $domain->getWebsite()->getDefaultLocale()] as $translationLocale) {
                     if ($translationLocale === null) {
                         continue;
@@ -79,7 +73,7 @@ class PageListener implements EventSubscriberInterface
 
                     $pageDescription = $this->pageTranslationRepository->findByPageAndLocale($page, $translationLocale);
 
-                    if ($pageDescription) {
+                    if ($pageDescription !== null) {
                         break;
                     }
                 }

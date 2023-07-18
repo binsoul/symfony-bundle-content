@@ -10,10 +10,7 @@ use BinSoul\Symfony\Bundle\Content\Element\Type;
 
 class TextType implements Type
 {
-    /**
-     * @var RawDataRenderer
-     */
-    private $renderer;
+    private ?RawDataRenderer $renderer = null;
 
     public function getCode(): string
     {

@@ -19,7 +19,7 @@ class TagRenderer implements Renderer
     /**
      * @var string[]
      */
-    private $tags;
+    private array $tags = [];
 
     /**
      * Constructs an instance of this class.
@@ -28,7 +28,7 @@ class TagRenderer implements Renderer
      */
     public function __construct(array $tags)
     {
-        if (count($tags) === 0) {
+        if ($tags === []) {
             throw new InvalidArgumentException('At least one tag is required.');
         }
 
@@ -47,8 +47,7 @@ class TagRenderer implements Renderer
 
         $result = '<' . $data['tag'] . ' class="' . $this->buildClassName($element->getType()) . '">';
         $result .= $this->escapeHtml($data['content']);
-        $result .= '</' . $data['tag'] . '>';
 
-        return $result;
+        return $result . ('</' . $data['tag'] . '>');
     }
 }

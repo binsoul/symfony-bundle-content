@@ -7,79 +7,69 @@ namespace BinSoul\Symfony\Bundle\Content\Entity;
 use BinSoul\Symfony\Bundle\I18n\Entity\LocaleEntity;
 use DateTime;
 use DateTimeInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Represents a translation of a page.
- *
- * @ORM\Entity()
- * @ORM\Table(
- *     name="page_translation",
- *     uniqueConstraints={
- *         @ORM\UniqueConstraint(columns={"page_id", "locale_id"}),
- *     }
- * )
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Table(name: 'page_translation')]
+#[ORM\UniqueConstraint(columns: ['page_id', 'locale_id'])]
+#[ORM\Entity]
+#[ORM\HasLifecycleCallbacks]
 class PageTranslationEntity
 {
     /**
      * @var int|null ID of the translation
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
      */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id;
 
     /**
      * @var PageEntity Page of the translation
-     * @ORM\ManyToOne(targetEntity="\BinSoul\Symfony\Bundle\Content\Entity\PageEntity", inversedBy="translations")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
-    private $page;
+    #[ORM\ManyToOne(targetEntity: PageEntity::class, inversedBy: 'translations')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    private PageEntity $page;
 
     /**
      * @var LocaleEntity Locale of the translation
-     * @ORM\ManyToOne(targetEntity="\BinSoul\Symfony\Bundle\I18n\Entity\LocaleEntity")
-     * @ORM\JoinColumn(nullable=false)
      */
-    private $locale;
+    #[ORM\ManyToOne(targetEntity: LocaleEntity::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private LocaleEntity $locale;
 
     /**
      * @var string Title of the page
-     * @ORM\Column(type="string", length=255, nullable=false)
      */
-    private $title;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $title;
 
     /**
      * @var string|null Meta title of the page
-     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $metaTitle;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $metaTitle = null;
 
     /**
      * @var string|null Meta keywords of the page
-     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $metaKeywords;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $metaKeywords = null;
 
     /**
      * @var string|null Meta description of the page
-     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $metaDescription;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $metaDescription = null;
 
-    /**
-     * @var DateTime Update date of the translation
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    private $updatedAt;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?DateTime $updatedAt = null;
 
-    /**
-     * @var DateTime Creation date of the translation
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    private $createdAt;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?DateTime $createdAt = null;
 
     /**
      * Constructs an instance of this class.
@@ -101,9 +91,7 @@ class PageTranslationEntity
 
     public function setPage(PageEntity $page): void
     {
-        if ($this->page !== null) {
-            $this->page->removeTranslation($this);
-        }
+        $this->page->removeTranslation($this);
 
         $page->addTranslation($this);
         $this->page = $page;
@@ -169,10 +157,8 @@ class PageTranslationEntity
         return $this->createdAt ?? new DateTime();
     }
 
-    /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     */
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
     public function updateTimestamps(): void
     {
         $this->updatedAt = new DateTime();

@@ -4,50 +4,46 @@ declare(strict_types=1);
 
 namespace BinSoul\Symfony\Bundle\Content\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
 
 /**
  * Represents a relationship between content elements.
- *
- * @ORM\Entity()
- * @ORM\Table(
- *     name="element_relation",
- *     uniqueConstraints={
- *         @ORM\UniqueConstraint(columns={"parent_id", "child_id"}),
- *     }
- * )
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'element_relation')]
+#[ORM\UniqueConstraint(columns: ['parent_id', 'child_id'])]
+#[ORM\HasLifecycleCallbacks]
 class ElementRelationEntity
 {
     /**
      * @var int|null ID of the translation
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
      */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id;
 
     /**
      * @var ElementEntity Element of the translation
-     * @ORM\ManyToOne(targetEntity="\BinSoul\Symfony\Bundle\Content\Entity\ElementEntity", inversedBy="children")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
-    private $parent;
+    #[ORM\ManyToOne(targetEntity: ElementEntity::class, inversedBy: 'children')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    private ElementEntity $parent;
 
     /**
      * @var ElementEntity Element of the translation
-     * @ORM\ManyToOne(targetEntity="\BinSoul\Symfony\Bundle\Content\Entity\ElementEntity", inversedBy="parents")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
-    private $child;
+    #[ORM\ManyToOne(targetEntity: ElementEntity::class, inversedBy: 'parents')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    private ElementEntity $child;
 
     /**
      * @var int Sort order of the child
-     * @ORM\Column(type="integer", nullable=false)
      */
-    private $sortOrder;
+    #[ORM\Column(type: Types::INTEGER)]
+    private int $sortOrder;
 
     /**
      * Constructs an instance of this class.
@@ -69,20 +65,15 @@ class ElementRelationEntity
 
     public function setParent(ElementEntity $parent): void
     {
-        if ($this->child !== null && $this->child->getId() === $parent->getId()) {
-            throw new InvalidArgumentException(sprintf('Parent and child should not be equal.'));
+        if ($this->child->getId() === $parent->getId()) {
+            throw new InvalidArgumentException('Parent and child should not be equal.');
         }
 
-        if ($this->parent !== null) {
-            $this->parent->removeRelation($this);
-        }
+        $this->parent->removeRelation($this);
 
         $this->parent = $parent;
-
-        if ($this->child !== null) {
-            $parent->addRelation($this);
-            $this->child->addRelation($this);
-        }
+        $parent->addRelation($this);
+        $this->child->addRelation($this);
     }
 
     public function getChild(): ElementEntity
@@ -92,20 +83,15 @@ class ElementRelationEntity
 
     public function setChild(ElementEntity $child): void
     {
-        if ($this->parent !== null && $this->parent->getId() === $child->getId()) {
-            throw new InvalidArgumentException(sprintf('Parent and child should not be equal.'));
+        if ($this->parent->getId() === $child->getId()) {
+            throw new InvalidArgumentException('Parent and child should not be equal.');
         }
 
-        if ($this->child !== null) {
-            $this->child->removeRelation($this);
-        }
+        $this->child->removeRelation($this);
 
         $this->child = $child;
-
-        if ($this->parent !== null) {
-            $child->addRelation($this);
-            $this->parent->addRelation($this);
-        }
+        $child->addRelation($this);
+        $this->parent->addRelation($this);
     }
 
     public function getSortOrder(): int

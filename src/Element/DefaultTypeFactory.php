@@ -14,7 +14,7 @@ class DefaultTypeFactory implements TypeFactory
     /**
      * @var Type[]
      */
-    private $types = [];
+    private array $types = [];
 
     /**
      * Constructs an instance of this class.

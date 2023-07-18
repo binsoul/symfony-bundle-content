@@ -9,15 +9,10 @@ namespace BinSoul\Symfony\Bundle\Content\Element;
  */
 class Context
 {
-    /**
-     * @var mixed[]
-     */
-    private $parameters = [];
+    private array $parameters = [];
 
     /**
      * Constructs an instance of this class.
-     *
-     * @param mixed[] $parameters
      */
     public function __construct(array $parameters = [])
     {
@@ -34,8 +29,6 @@ class Context
 
     /**
      * Adds a list of parameters.
-     *
-     * @param mixed[] $parameters
      */
     public function add(array $parameters): void
     {
@@ -46,8 +39,6 @@ class Context
 
     /**
      * Returns all parameters.
-     *
-     * @return mixed[]
      */
     public function all(): array
     {
@@ -56,12 +47,8 @@ class Context
 
     /**
      * Returns a parameter or the default value if the parameter doesn't exist.
-     *
-     * @param mixed|null $default
-     *
-     * @return mixed|null
      */
-    public function get(string $name, $default = null)
+    public function get(string $name, mixed $default = null)
     {
         if (! array_key_exists($name, $this->parameters)) {
             return $default;
@@ -76,7 +63,7 @@ class Context
      * @param string $name  The parameter name
      * @param mixed  $value The parameter value
      */
-    public function set(string $name, $value): void
+    public function set(string $name, mixed $value): void
     {
         $this->parameters[$name] = $value;
     }

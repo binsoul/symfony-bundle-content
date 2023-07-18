@@ -6,7 +6,7 @@ namespace BinSoul\Symfony\Bundle\Content\EventListener;
 
 use BinSoul\Symfony\Bundle\Content\Entity\ElementTranslationEntity;
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Doctrine\ORM\Events;
 
 /**
@@ -22,9 +22,9 @@ class SynchronizeElementTranslationListener implements EventSubscriber
         return [Events::preRemove];
     }
 
-    public function preRemove(LifecycleEventArgs $args): void
+    public function preRemove(PreRemoveEventArgs $args): void
     {
-        $entity = $args->getEntity();
+        $entity = $args->getObject();
 
         if ($entity instanceof ElementTranslationEntity) {
             $entity->getElement()->removeTranslation($entity);

@@ -11,10 +11,7 @@ use Twig\Environment;
 
 class TwigGlobalsListener implements EventSubscriberInterface
 {
-    /**
-     * @var Environment
-     */
-    private $twig;
+    private Environment $twig;
 
     /**
      * Constructs an instance of this class.
@@ -25,7 +22,7 @@ class TwigGlobalsListener implements EventSubscriberInterface
     }
 
     /**
-     * @return mixed[][]
+     * @return array[]
      */
     public static function getSubscribedEvents(): array
     {

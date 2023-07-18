@@ -33,8 +33,7 @@ class HtmlType implements Type, Renderer
     {
         $result = '<div class="' . $this->buildClassName($element->getType()) . '">';
         $result .= $element->getRawData();
-        $result .= '</div>';
 
-        return $result;
+        return $result . '</div>';
     }
 }

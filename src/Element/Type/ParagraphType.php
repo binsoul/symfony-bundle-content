@@ -10,10 +10,7 @@ use BinSoul\Symfony\Bundle\Content\Element\Type;
 
 class ParagraphType implements Type
 {
-    /**
-     * @var TagRenderer
-     */
-    private $renderer;
+    private ?TagRenderer $renderer = null;
 
     public function getCode(): string
     {

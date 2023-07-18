@@ -8,97 +8,98 @@ use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
 
 /**
  * Represents a content element.
- *
- * @ORM\Entity()
- * @ORM\Table(name="element")
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'element')]
+#[ORM\HasLifecycleCallbacks]
+
 class ElementEntity
 {
     /**
      * @var int|null ID of the route
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
      */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id = null;
 
     /**
      * @var string Type of the the element
-     * @ORM\Column(type="string", length=128, nullable=false)
      */
-    private $type;
+    #[ORM\Column(type: Types::STRING, length: 128)]
+    private string $type;
 
     /**
      * @var string|null Name of the the element
-     * @ORM\Column(type="string", length=128, nullable=true)
      */
-    private $name;
+    #[ORM\Column(type: Types::STRING, length: 128, nullable: true)]
+    private ?string $name = null;
 
     /**
      * @var bool Visibility of the element
-     * @ORM\Column(type="boolean", nullable=false)
      */
-    private $isVisible;
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $isVisible = false;
 
     /**
-     * @var DateTime|null Start of the visibility of the element
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var DateTimeInterface|null Start of the visibility of the element
      */
-    private $visibleFrom;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?DateTimeInterface $visibleFrom;
 
     /**
-     * @var DateTime|null End of the visibility of the element
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var DateTimeInterface|null End of the visibility of the element
      */
-    private $visibleTo;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?DateTimeInterface $visibleTo;
 
     /**
      * @var string|null Margin before the element
-     * @ORM\Column(type="string", length=32, nullable=true)
      */
-    private $marginBefore;
+    #[ORM\Column(type: Types::STRING, length: 32, nullable: true)]
+    private ?string $marginBefore;
 
     /**
      * @var string|null Margin after the element
-     * @ORM\Column(type="string", length=32, nullable=true)
      */
-    private $marginAfter;
+    #[ORM\Column(type: Types::STRING, length: 32, nullable: true)]
+    private ?string $marginAfter;
 
     /**
-     * @var DateTime Update date of the element
-     * @ORM\Column(type="datetime", nullable=false)
+     * @var DateTimeInterface Update date of the element
      */
-    private $updatedAt;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private DateTimeInterface $updatedAt;
 
     /**
-     * @var DateTime Creation date of the element
-     * @ORM\Column(type="datetime", nullable=false)
+     * @var DateTimeInterface Creation date of the element
      */
-    private $createdAt;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private DateTimeInterface $createdAt;
 
     /**
      * @var ElementTranslationEntity[]|Collection<int, ElementTranslationEntity>
-     * @ORM\OneToMany(targetEntity="\BinSoul\Symfony\Bundle\Content\Entity\ElementTranslationEntity", mappedBy="element")
      */
-    private $translations;
+    #[ORM\OneToMany(mappedBy: 'element', targetEntity: ElementTranslationEntity::class)]
+    private Collection $translations;
 
     /**
      * @var ElementRelationEntity[]|Collection<int, ElementRelationEntity>
-     * @ORM\OneToMany(targetEntity="\BinSoul\Symfony\Bundle\Content\Entity\ElementRelationEntity", mappedBy="parent")
      */
-    private $children;
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: ElementRelationEntity::class)]
+    private Collection $children;
 
     /**
      * @var ElementRelationEntity[]|Collection<int, ElementRelationEntity>
-     * @ORM\OneToMany(targetEntity="\BinSoul\Symfony\Bundle\Content\Entity\ElementRelationEntity", mappedBy="child")
      */
-    private $parents;
+    #[ORM\OneToMany(mappedBy: 'child', targetEntity: ElementRelationEntity::class)]
+    private collection $parents;
 
     /**
      * Constructs an instance of this class.
@@ -151,7 +152,7 @@ class ElementEntity
         return $this->visibleFrom;
     }
 
-    public function setVisibleFrom(?DateTime $visibleFrom): void
+    public function setVisibleFrom(?DateTimeInterface $visibleFrom): void
     {
         $this->visibleFrom = $visibleFrom;
     }
@@ -161,7 +162,7 @@ class ElementEntity
         return $this->visibleTo;
     }
 
-    public function setVisibleTo(?DateTime $visibleTo): void
+    public function setVisibleTo(?DateTimeInterface $visibleTo): void
     {
         $this->visibleTo = $visibleTo;
     }
@@ -300,10 +301,8 @@ class ElementEntity
         }
     }
 
-    /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     */
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
     public function updateTimestamps(): void
     {
         $this->updatedAt = new DateTime();

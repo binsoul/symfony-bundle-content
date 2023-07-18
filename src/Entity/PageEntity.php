@@ -10,67 +10,57 @@ use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Represents a web page.
- *
- * @ORM\Entity()
- * @ORM\Table(
- *     name="page",
- *     uniqueConstraints={
- *         @ORM\UniqueConstraint(columns={"route_id"}),
- *     }
- * )
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Table(name: 'page')]
+#[ORM\UniqueConstraint(columns: ['route_id'])]
+#[ORM\Entity]
+#[ORM\HasLifecycleCallbacks]
 class PageEntity
 {
     /**
      * @var int|null ID of the route
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
      */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id;
 
     /**
      * @var WebsiteEntity Website of the page
-     * @ORM\ManyToOne(targetEntity="\BinSoul\Symfony\Bundle\Website\Entity\WebsiteEntity")
-     * @ORM\JoinColumn(nullable=false)
      */
-    private $website;
+    #[ORM\ManyToOne(targetEntity: WebsiteEntity::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private WebsiteEntity $website;
 
     /**
      * @var RouteEntity Canonical route of the page
-     * @ORM\ManyToOne(targetEntity="\BinSoul\Symfony\Bundle\Routing\Entity\RouteEntity")
-     * @ORM\JoinColumn(nullable=false)
      */
-    private $route;
+    #[ORM\ManyToOne(targetEntity: RouteEntity::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private RouteEntity $route;
 
     /**
      * @var string Name of the page
-     * @ORM\Column(type="string", length=255, nullable=false)
      */
-    private $name;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $name;
 
-    /**
-     * @var DateTime Update date of the product
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    private $updatedAt;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?DateTime $updatedAt = null;
 
-    /**
-     * @var DateTime Creation date of the product
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    private $createdAt;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?DateTime $createdAt = null;
 
     /**
      * @var PageTranslationEntity[]|Collection<int, PageTranslationEntity>
-     * @ORM\OneToMany(targetEntity="\BinSoul\Symfony\Bundle\Content\Entity\PageTranslationEntity", mappedBy="page")
      */
-    private $translations;
+    #[ORM\OneToMany(mappedBy: 'page', targetEntity: PageTranslationEntity::class)]
+    private Collection $translations;
 
     /**
      * Constructs an instance of this class.
@@ -154,10 +144,8 @@ class PageEntity
         }
     }
 
-    /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     */
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
     public function updateTimestamps(): void
     {
         $this->updatedAt = new DateTime();

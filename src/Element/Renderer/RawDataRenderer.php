@@ -19,8 +19,7 @@ class RawDataRenderer implements Renderer
     {
         $result = '<div class="' . $this->buildClassName($element->getType()) . '">';
         $result .= $this->escapeHtml($element->getRawData());
-        $result .= '</div>';
 
-        return $result;
+        return $result . '</div>';
     }
 }

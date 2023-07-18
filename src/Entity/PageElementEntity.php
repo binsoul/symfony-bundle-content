@@ -5,58 +5,52 @@ declare(strict_types=1);
 namespace BinSoul\Symfony\Bundle\Content\Entity;
 
 use BinSoul\Symfony\Bundle\I18n\Entity\LocaleEntity;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Links an element to a page.
- *
- * @ORM\Entity()
- * @ORM\Table(
- *     name="page_element",
- *     uniqueConstraints={
- *         @ORM\UniqueConstraint(columns={"page_id", "locale_id", "element_id"}),
- *     },
- *     indexes={
- *         @ORM\Index(columns={"page_id", "locale_id"}),
- *     }
- * )
  */
+#[ORM\Table(name: 'page_element')]
+#[ORM\Index(columns: ['page_id', 'locale_id'])]
+#[ORM\UniqueConstraint(columns: ['page_id', 'locale_id', 'element_id'])]
+#[ORM\Entity]
 class PageElementEntity
 {
     /**
      * @var int|null ID of the translation
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
      */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id;
 
     /**
      * @var PageEntity Page of the translation
-     * @ORM\ManyToOne(targetEntity="\BinSoul\Symfony\Bundle\Content\Entity\PageEntity")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
-    private $page;
+    #[ORM\ManyToOne(targetEntity: PageEntity::class)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    private PageEntity $page;
 
     /**
      * @var LocaleEntity Locale of the translation
-     * @ORM\ManyToOne(targetEntity="\BinSoul\Symfony\Bundle\I18n\Entity\LocaleEntity")
-     * @ORM\JoinColumn(nullable=false)
      */
-    private $locale;
+    #[ORM\ManyToOne(targetEntity: LocaleEntity::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private LocaleEntity $locale;
 
     /**
      * @var ElementEntity Element of the translation
-     * @ORM\ManyToOne(targetEntity="\BinSoul\Symfony\Bundle\Content\Entity\ElementEntity")
-     * @ORM\JoinColumn(nullable=false)
      */
-    private $element;
+    #[ORM\ManyToOne(targetEntity: ElementEntity::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ElementEntity $element;
 
     /**
      * @var int Sort order of the child
-     * @ORM\Column(type="integer", nullable=false)
      */
-    private $sortOrder;
+    #[ORM\Column(type: Types::INTEGER)]
+    private int $sortOrder;
 
     /**
      * Constructs an instance of this class.

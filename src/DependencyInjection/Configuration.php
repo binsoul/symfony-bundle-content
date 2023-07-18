@@ -18,10 +18,10 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->getRootNode();
         $rootNode
             ->children()
-                ->scalarNode('prefix')
-                    ->defaultValue('')
-                    ->info('will be prepended to table, index and sequence names')
-                ->end()
+            ->scalarNode('prefix')
+            ->defaultValue('')
+            ->info('will be prepended to table, index and sequence names')
+            ->end()
             ->end();
 
         return $treeBuilder;
