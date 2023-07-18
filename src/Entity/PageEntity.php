@@ -16,10 +16,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Represents a web page.
  */
+#[ORM\Entity]
 #[ORM\Table(name: 'page')]
 #[ORM\UniqueConstraint(columns: ['route_id'])]
-#[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
+#[ORM\Cache(usage: 'NONSTRICT_READ_WRITE')]
 class PageEntity
 {
     /**

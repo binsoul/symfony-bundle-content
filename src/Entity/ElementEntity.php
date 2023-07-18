@@ -18,7 +18,7 @@ use InvalidArgumentException;
 #[ORM\Entity]
 #[ORM\Table(name: 'element')]
 #[ORM\HasLifecycleCallbacks]
-
+#[ORM\Cache(usage: 'NONSTRICT_READ_WRITE')]
 class ElementEntity
 {
     /**

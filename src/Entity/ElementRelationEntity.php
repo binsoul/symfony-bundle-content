@@ -15,6 +15,7 @@ use InvalidArgumentException;
 #[ORM\Table(name: 'element_relation')]
 #[ORM\UniqueConstraint(columns: ['parent_id', 'child_id'])]
 #[ORM\HasLifecycleCallbacks]
+#[ORM\Cache(usage: 'NONSTRICT_READ_WRITE')]
 class ElementRelationEntity
 {
     /**

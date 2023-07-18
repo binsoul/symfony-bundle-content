@@ -11,10 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Links an element to a page.
  */
+#[ORM\Entity]
 #[ORM\Table(name: 'page_element')]
 #[ORM\Index(columns: ['page_id', 'locale_id'])]
 #[ORM\UniqueConstraint(columns: ['page_id', 'locale_id', 'element_id'])]
-#[ORM\Entity]
+#[ORM\Cache(usage: 'NONSTRICT_READ_WRITE')]
 class PageElementEntity
 {
     /**

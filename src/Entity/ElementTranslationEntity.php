@@ -17,6 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'element_translation')]
 #[ORM\UniqueConstraint(columns: ['element_id', 'locale_id'])]
 #[ORM\HasLifecycleCallbacks]
+#[ORM\Cache(usage: 'NONSTRICT_READ_WRITE')]
 class ElementTranslationEntity
 {
     /**
