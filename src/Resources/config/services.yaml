@@ -13,16 +13,7 @@ services:
         tags: ['kernel.event_subscriber']
 
     BinSoul\Symfony\Bundle\Content\EventListener\TablePrefixListener:
-        tags: ['doctrine.event_subscriber']
-
-    BinSoul\Symfony\Bundle\Content\EventListener\SynchronizePageTranslationListener:
-        tags: ['doctrine.event_subscriber']
-
-    BinSoul\Symfony\Bundle\Content\EventListener\SynchronizeElementTranslationListener:
-        tags: ['doctrine.event_subscriber']
-
-    BinSoul\Symfony\Bundle\Content\EventListener\SynchronizeElementRelationListener:
-        tags: ['doctrine.event_subscriber']
+        public: true
 
     BinSoul\Symfony\Bundle\Content\Element\Type\:
         resource: '../../Element/Type'

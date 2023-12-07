@@ -5,23 +5,16 @@ declare(strict_types=1);
 namespace BinSoul\Symfony\Bundle\Content\EventListener;
 
 use BinSoul\Symfony\Bundle\Content\Entity\ElementRelationEntity;
-use Doctrine\Common\EventSubscriber;
+use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Doctrine\ORM\Events;
 
 /**
  * Synchronizes the parents and children of element entities.
  */
-class SynchronizeElementRelationListener implements EventSubscriber
+#[AsDoctrineListener(event: Events::preRemove)]
+class SynchronizeElementRelationListener
 {
-    /**
-     * @return string[]
-     */
-    public function getSubscribedEvents(): array
-    {
-        return [Events::preRemove];
-    }
-
     public function preRemove(PreRemoveEventArgs $args): void
     {
         $entity = $args->getObject();

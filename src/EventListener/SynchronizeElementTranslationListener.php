@@ -5,23 +5,16 @@ declare(strict_types=1);
 namespace BinSoul\Symfony\Bundle\Content\EventListener;
 
 use BinSoul\Symfony\Bundle\Content\Entity\ElementTranslationEntity;
-use Doctrine\Common\EventSubscriber;
+use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Doctrine\ORM\Events;
 
 /**
  * Synchronizes the translations property of element entities.
  */
-class SynchronizeElementTranslationListener implements EventSubscriber
+#[AsDoctrineListener(event: Events::preRemove)]
+class SynchronizeElementTranslationListener
 {
-    /**
-     * @return string[]
-     */
-    public function getSubscribedEvents(): array
-    {
-        return [Events::preRemove];
-    }
-
     public function preRemove(PreRemoveEventArgs $args): void
     {
         $entity = $args->getObject();
