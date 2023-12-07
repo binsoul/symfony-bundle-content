@@ -8,8 +8,10 @@ services:
         resource: '../../Repository/*'
         public: true
 
-    BinSoul\Symfony\Bundle\Content\EventListener\:
-        resource: '../../EventListener/*'
+    BinSoul\Symfony\Bundle\Content\EventListener\PageListener:
+        tags: ['kernel.event_subscriber']
+
+    BinSoul\Symfony\Bundle\Content\EventListener\TwigGlobalsListener:
         tags: ['kernel.event_subscriber']
 
     BinSoul\Symfony\Bundle\Content\EventListener\TablePrefixListener:
