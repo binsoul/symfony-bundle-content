@@ -17,6 +17,15 @@ services:
     BinSoul\Symfony\Bundle\Content\EventListener\TablePrefixListener:
         public: true
 
+    BinSoul\Symfony\Bundle\Content\EventListener\SynchronizeElementRelationListener:
+        public: true
+
+    BinSoul\Symfony\Bundle\Content\EventListener\SynchronizeElementTranslationListener:
+        public: true
+
+    BinSoul\Symfony\Bundle\Content\EventListener\SynchronizePageTranslationListener:
+        public: true
+
     BinSoul\Symfony\Bundle\Content\Element\Type\:
         resource: '../../Element/Type'
         tags: ['content_element_type']
