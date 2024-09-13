@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": ">=8.1",
         "ext-json": "*",
         "ext-iconv": "*",
         "binsoul/common-i18n": "*@dev",
@@ -28,10 +28,10 @@
         "binsoul/symfony-bundle-routing": "*@dev",
         "binsoul/symfony-bundle-website": "*@dev",
         "doctrine/orm": "^2",
-        "symfony/config": "^5 || ^6",
-        "symfony/dependency-injection": "^5 || ^6",
-        "symfony/http-kernel": "^5 || ^6",
-        "symfony/twig-bundle": "^5 || ^6"
+        "symfony/config": "^6 || ^7",
+        "symfony/dependency-injection": "^6 || ^7",
+        "symfony/http-kernel": "^6 || ^7",
+        "symfony/twig-bundle": "^6 || ^7"
     },
     "require-dev": {
         "binsoul/coding-standard": "^1",
