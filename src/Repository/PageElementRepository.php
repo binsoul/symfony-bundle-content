@@ -11,6 +11,9 @@ use BinSoul\Symfony\Bundle\Doctrine\Repository\AbstractRepository;
 use BinSoul\Symfony\Bundle\I18n\Entity\LocaleEntity;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @extends AbstractRepository<PageElementEntity>
+ */
 class PageElementRepository extends AbstractRepository
 {
     /**

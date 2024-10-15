@@ -10,7 +10,7 @@ use RuntimeException;
 trait EscaperTrait
 {
     /**
-     * @var string[]
+     * @var array<string, string>
      */
     private static $shortJavascriptSequences = [
         '\\' => '\\\\',

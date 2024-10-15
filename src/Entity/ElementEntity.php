@@ -81,25 +81,25 @@ class ElementEntity
      * @var DateTimeInterface Creation date of the element
      */
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private DateTimeInterface $createdAt;
+    private ?DateTimeInterface $createdAt = null;
 
     /**
-     * @var ElementTranslationEntity[]|Collection<int, ElementTranslationEntity>
+     * @var Collection<int, ElementTranslationEntity>
      */
-    #[ORM\OneToMany(mappedBy: 'element', targetEntity: ElementTranslationEntity::class)]
+    #[ORM\OneToMany(targetEntity: ElementTranslationEntity::class, mappedBy: 'element')]
     private Collection $translations;
 
     /**
-     * @var ElementRelationEntity[]|Collection<int, ElementRelationEntity>
+     * @var Collection<int, ElementRelationEntity>
      */
-    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: ElementRelationEntity::class)]
+    #[ORM\OneToMany(targetEntity: ElementRelationEntity::class, mappedBy: 'parent')]
     private Collection $children;
 
     /**
-     * @var ElementRelationEntity[]|Collection<int, ElementRelationEntity>
+     * @var Collection<int, ElementRelationEntity>
      */
-    #[ORM\OneToMany(mappedBy: 'child', targetEntity: ElementRelationEntity::class)]
-    private collection $parents;
+    #[ORM\OneToMany(targetEntity: ElementRelationEntity::class, mappedBy: 'child')]
+    private Collection $parents;
 
     /**
      * Constructs an instance of this class.

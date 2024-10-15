@@ -28,9 +28,6 @@ class PageListener implements EventSubscriberInterface
         $this->pageTranslationRepository = $pageTranslationRepository;
     }
 
-    /**
-     * @return array[]
-     */
     public static function getSubscribedEvents(): array
     {
         return [

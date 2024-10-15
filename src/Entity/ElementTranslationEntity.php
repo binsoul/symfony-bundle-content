@@ -43,10 +43,10 @@ class ElementTranslationEntity
     private LocaleEntity $locale;
 
     /**
-     * @var string|array Serialized data of the translation
+     * @var string Serialized data of the translation
      */
     #[ORM\Column(type: Types::TEXT)]
-    private string|array $data;
+    private string $data;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?DateTime $updatedAt = null;
@@ -102,18 +102,22 @@ class ElementTranslationEntity
 
     /**
      * Deserializes the data property and return the resulting array.
+     *
+     * @return array<string, mixed>
      */
     public function getStructuredData(): array
     {
         if (! is_string($this->data)) {
-            return $this->data;
+            return (array) $this->data;
         }
 
-        return @json_decode($this->data, true, 512, JSON_THROW_ON_ERROR);
+        return (array) @json_decode($this->data, true, 512, JSON_THROW_ON_ERROR);
     }
 
     /**
      * Serializes the given array and updates the data property.
+     *
+     * @param array<string, mixed> $data
      */
     public function setStructuredData(array $data): void
     {

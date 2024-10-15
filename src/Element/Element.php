@@ -23,6 +23,8 @@ interface Element
 
     /**
      * Returns the deserialized data.
+     *
+     * @return array<string, mixed>
      */
     public function getStructuredData(): array;
 }

@@ -19,7 +19,7 @@ class TagRenderer implements Renderer
     /**
      * @var string[]
      */
-    private array $tags = [];
+    private array $tags;
 
     /**
      * Constructs an instance of this class.

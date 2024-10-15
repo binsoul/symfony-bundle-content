@@ -21,9 +21,6 @@ class TwigGlobalsListener implements EventSubscriberInterface
         $this->twig = $twig;
     }
 
-    /**
-     * @return array[]
-     */
     public static function getSubscribedEvents(): array
     {
         return [

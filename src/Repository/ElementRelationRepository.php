@@ -9,6 +9,9 @@ use BinSoul\Symfony\Bundle\Content\Entity\ElementRelationEntity;
 use BinSoul\Symfony\Bundle\Doctrine\Repository\AbstractRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @extends AbstractRepository<ElementRelationEntity>
+ */
 class ElementRelationRepository extends AbstractRepository
 {
     /**

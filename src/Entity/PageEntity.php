@@ -58,9 +58,9 @@ class PageEntity
     private ?DateTime $createdAt = null;
 
     /**
-     * @var PageTranslationEntity[]|Collection<int, PageTranslationEntity>
+     * @var Collection<int, PageTranslationEntity>
      */
-    #[ORM\OneToMany(mappedBy: 'page', targetEntity: PageTranslationEntity::class)]
+    #[ORM\OneToMany(targetEntity: PageTranslationEntity::class, mappedBy: 'page')]
     private Collection $translations;
 
     /**

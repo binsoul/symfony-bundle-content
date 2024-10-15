@@ -9,10 +9,15 @@ namespace BinSoul\Symfony\Bundle\Content\Element;
  */
 class Context
 {
+    /**
+     * @var array<string, mixed>
+     */
     private array $parameters = [];
 
     /**
      * Constructs an instance of this class.
+     *
+     * @param array<string, mixed> $parameters
      */
     public function __construct(array $parameters = [])
     {
@@ -29,6 +34,8 @@ class Context
 
     /**
      * Adds a list of parameters.
+     *
+     * @param array<string, mixed> $parameters
      */
     public function add(array $parameters): void
     {
@@ -39,6 +46,8 @@ class Context
 
     /**
      * Returns all parameters.
+     *
+     * @return array<string, mixed>
      */
     public function all(): array
     {
@@ -48,7 +57,7 @@ class Context
     /**
      * Returns a parameter or the default value if the parameter doesn't exist.
      */
-    public function get(string $name, mixed $default = null)
+    public function get(string $name, mixed $default = null): mixed
     {
         if (! array_key_exists($name, $this->parameters)) {
             return $default;
