@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace BinSoul\Symfony\Bundle\Content;
 
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class BinsoulContentBundle extends Bundle
@@ -14,15 +16,18 @@ class BinsoulContentBundle extends Bundle
     {
         parent::build($container);
 
-        $ormCompilerClass = 'Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass';
+        $container->addCompilerPass(
+            $this->buildDoctrineOrmMappingsPass(
+                ['BinSoul\Symfony\Bundle\Content'],
+                [(string) realpath(__DIR__ . '/Entity')],
+            )
+        );
+    }
 
-        if (class_exists($ormCompilerClass)) {
-            $container->addCompilerPass(
-                DoctrineOrmMappingsPass::createAttributeMappingDriver(
-                    ['BinSoul\Symfony\Bundle\Content'],
-                    [(string) realpath(__DIR__ . '/Entity')],
-                )
-            );
-        }
+    private function buildDoctrineOrmMappingsPass(array $namespaces, array $directories): DoctrineOrmMappingsPass
+    {
+        $driver = new Definition(AttributeDriver::class, [$directories]);
+
+        return new DoctrineOrmMappingsPass($driver, $namespaces, [], false, []);
     }
 }
